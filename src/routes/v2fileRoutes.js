@@ -40,8 +40,8 @@ v2Routes.post(
 
 v2Routes.post(
   "/get-uploaded-parts",
-  // auth.authenticate,
-  // auth.authorize("user", "admin"),
+  auth.authenticate,
+  auth.authorize("user", "admin"),
   v2ctr.getUploadedPart,
 );
 
