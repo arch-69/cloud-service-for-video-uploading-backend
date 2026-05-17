@@ -8,6 +8,12 @@ const planSchema = new mongoose.Schema(
       required: true,
     },
 
+    rzPlanId: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+
     storageLimit: {
       type: Number,
       required: true,
