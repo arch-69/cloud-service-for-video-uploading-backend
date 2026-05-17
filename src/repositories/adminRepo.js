@@ -2,7 +2,7 @@ import Plan from "../models/plan.js";
 
 const createPlan = (data) => Plan.create(data);
 
-const getPlan = () => Plan.find();
+const getPlan = () => Plan.find().select("-rzPlanId");
 
 const updatePlan = ({ _id, data }) => {
   if (data == null) return;
