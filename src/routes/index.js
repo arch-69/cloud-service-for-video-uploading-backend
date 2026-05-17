@@ -7,7 +7,13 @@ import publicRoutes from "./publicRoutes.js";
 
 const router = express.Router();
 
-router.use("/file", fileRoutes);
+router.use(
+  "/file",
+  async (req, res, next) => {
+    return res.send("this service is temporarily blocked");
+  },
+  fileRoutes,
+);
 router.use("/auth", authRoutes);
 router.use("/profile", userRoutes);
 router.use("/admin", adminRoutes);
