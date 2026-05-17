@@ -1,5 +1,6 @@
 import Plan from "../models/plan.js";
 import razorpay from "../configs/razorpayconfig.js";
+import ApiError from "../utils/ApiError.js";
 
 const generateSubscriptionId = async ({ planId }) => {
   if (!planId) throw new ApiError(400, "planId is required", null);
