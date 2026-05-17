@@ -2,16 +2,13 @@ import crypto from "crypto";
 import ApiError from "../utils/ApiError.js";
 
 const verifySignature = async (req, res, next) => {
-  const data = req.body;
-  console.log(data);
   try {
     const expectedSignature = crypto
       .createHmac("sha256", process.env.WEBHOOK_SECRET)
-      .update(body)
+      .update(req.body)
       .digest("hex");
 
     const receivedSignature = req.headers["x-razorpay-signature"];
-    console.log(receivedSignature);
     if (expectedSignature !== receivedSignature)
       return next(new ApiError(400, "invalid signature", null));
 
