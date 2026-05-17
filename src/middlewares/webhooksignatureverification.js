@@ -2,10 +2,11 @@ import crypto from "crypto";
 import ApiError from "../utils/ApiError.js";
 
 const verifySignature = async (req, res, next) => {
+  const body = JSON.stringify(req.body);
   try {
     const expectedSignature = crypto
       .createHmac("sha256", process.env.WEBHOOK_SECRET)
-      .update(req.body)
+      .update(body)
       .digest("hex");
 
     const receivedSignature = req.headers["x-razorpay-signature"];
