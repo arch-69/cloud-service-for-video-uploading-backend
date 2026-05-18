@@ -22,6 +22,16 @@ const generateSubscriptionId = async ({ planId }) => {
   }
 };
 
+const generateSubscription = async ({ event, payload }) => {
+  try {
+    console.log(event);
+    console.log(payload);
+  } catch (err) {
+    throw new ApiError(500, err.message, err.errors);
+  }
+};
+
 export default {
   generateSubscriptionId,
+  generateSubscription,
 };

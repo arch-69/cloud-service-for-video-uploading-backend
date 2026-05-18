@@ -56,7 +56,7 @@ const getAllUploads = ({ _id }) =>
 
 const getCompletedUploads = ({ _id }) =>
   User.findById(_id)
-    .select("")
+    .select("-password")
     .populate({
       path: "uploadedFile",
       match: {

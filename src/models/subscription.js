@@ -5,10 +5,18 @@ const subscriptionSchema = new mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
+      required: true,
     },
     plan: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Plan",
+      required: true,
+    },
+
+    subscriptionId: {
+      type: String,
+      unique: true,
+      required: true,
     },
 
     status: {
@@ -16,9 +24,15 @@ const subscriptionSchema = new mongoose.Schema(
       enum: ["ACTIVE", "EXPIRED", "CANCELLED", "PAST_DUE"],
     },
 
-    startedAt: Date,
+    startedAt: {
+      type: Date,
+      required: true,
+    },
 
-    expiresAt: Date,
+    expiresAt: {
+      type: Date,
+      required: true,
+    },
 
     autoRenew: Boolean,
   },

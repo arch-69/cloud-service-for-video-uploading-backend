@@ -15,6 +15,7 @@ const generateSubscriptionId = asyncHandler(async (req, res) => {
 
 const handleWebhookEvent = asyncHandler(async (req, res) => {
   console.log("webhook request: ", req.body);
+  const response = await subscriptionService.generateSubscription(req.body);
 });
 
 export default {
