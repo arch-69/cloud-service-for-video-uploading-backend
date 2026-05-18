@@ -33,8 +33,8 @@ const createSubscription = async ({ subscriptionId, planId, userId }) => {
 
     const subscription = await subscriptionRepo.createSubscription({
       subscriptionId,
-      planId,
-      userId,
+      plan: planId,
+      user: userId,
     });
 
     return subscription;
