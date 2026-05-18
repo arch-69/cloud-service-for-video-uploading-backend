@@ -1,6 +1,7 @@
 import Plan from "../models/plan.js";
 import razorpay from "../configs/razorpayconfig.js";
 import ApiError from "../utils/ApiError.js";
+import subscriptionRepo from "../repositories/subscriptionRepo.js";
 
 const generateSubscriptionId = async ({ planId }) => {
   if (!planId) throw new ApiError(400, "planId is required", null);
@@ -22,10 +23,21 @@ const generateSubscriptionId = async ({ planId }) => {
   }
 };
 
-const generateSubscription = async ({ event, payload }) => {
+const createSubscription = async ({ subscriptionId, planId, userId }) => {
   try {
-    console.log(event);
-    console.log(payload);
+    const isExist = await subscriptionRepo.findBySubscriptionId({
+      subscriptionId,
+    });
+
+    if (isExist) throw new ApiError(400, "subscription is already exist");
+
+    const subscription = await subscriptionRepo.createSubscription({
+      subscriptionId,
+      planId,
+      userId,
+    });
+
+    return subscription;
   } catch (err) {
     throw new ApiError(500, err.message, err.errors);
   }
@@ -33,5 +45,5 @@ const generateSubscription = async ({ event, payload }) => {
 
 export default {
   generateSubscriptionId,
-  generateSubscription,
+  createSubscription,
 };

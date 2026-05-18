@@ -4,8 +4,18 @@ import subscriptionService from "../services/subscriptionService.js";
 
 const generateSubscriptionId = asyncHandler(async (req, res) => {
   const { planId } = req.body;
+  const user = req.body;
   console.log(planId);
-  const response = await subscriptionService.generateSubscriptionId({ planId });
+  const response = await subscriptionService.generateSubscriptionId({
+    planId,
+  });
+
+  await subscriptionService.createSubscription({
+    subscriptionId: response,
+    planId,
+    userId: user._id,
+  });
+
   return res
     .status(201)
     .json(
@@ -15,7 +25,7 @@ const generateSubscriptionId = asyncHandler(async (req, res) => {
 
 const handleWebhookEvent = asyncHandler(async (req, res) => {
   console.log("webhook request: ", req.body);
-  const response = await subscriptionService.generateSubscription(req.body);
+  res.status(200).json({ message: "okay" });
 });
 
 export default {
