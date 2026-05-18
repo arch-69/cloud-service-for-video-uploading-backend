@@ -4,11 +4,13 @@ import subscriptionService from "../services/subscriptionService.js";
 
 const generateSubscriptionId = asyncHandler(async (req, res) => {
   const { planId } = req.body;
-  const user = req.body;
-  console.log(planId);
+  const user = req.user;
+  // console.log(planId);
   const response = await subscriptionService.generateSubscriptionId({
     planId,
   });
+
+  // console.log(user._id);
 
   await subscriptionService.createSubscription({
     subscriptionId: response,
