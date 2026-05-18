@@ -43,7 +43,24 @@ const createSubscription = async ({ subscriptionId, planId, userId }) => {
   }
 };
 
+const handleWebhook = async ({ event, payload }) => {
+  const entity = payload.subscription.entity;
+  try {
+    const subscription = await subscriptionRepo.findBySubscriptionId(entity.id);
+    if (!subscription) throw new ApiError(404, "subscription not found", null);
+    switch (event) {
+      case "subscription.activated":
+        {
+        }
+        break;
+    }
+  } catch (error) {
+    throw new ApiError(500, error.message, error.errors);
+  }
+};
+
 export default {
   generateSubscriptionId,
   createSubscription,
+  handleWebhook,
 };

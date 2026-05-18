@@ -17,7 +17,11 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1", router);
-app.use("/api/v2/file", v2Routes);
+app.use(
+  "/api/v2/file",
+  (req, res, next) => res.send("this service is temporarily blocked"),
+  v2Routes,
+);
 
 // app.get("/", async (req, res)=>{
 //     const bucket = process.env.BUCKET_NAME
