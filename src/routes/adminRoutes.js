@@ -17,13 +17,28 @@ adminRoutes.post(
 
 adminRoutes.get(
   "/blocked-services-types",
-  // auth.authenticate,
-  // auth.authorize("admin"),
+  auth.authenticate,
+  auth.authorize("admin"),
   blockController.getAllServiceTypes,
 );
 
-adminRoutes.put("/updateservice/:id", blockController.updateSerivce);
-adminRoutes.get("/allservices", blockController.allService);
-adminRoutes.get("/blocked-service", blockController.blockedServices);
+adminRoutes.put(
+  "/updateservice/:id",
+  auth.authenticate,
+  auth.authorize("admin"),
+  blockController.updateSerivce,
+);
+adminRoutes.get(
+  "/allservices",
+  auth.authenticate,
+  auth.authorize("admin"),
+  blockController.allService,
+);
+adminRoutes.get(
+  "/blocked-service",
+  auth.authenticate,
+  auth.authorize("admin"),
+  blockController.blockedServices,
+);
 
 export default adminRoutes;
