@@ -47,6 +47,7 @@ const handleWebhook = async ({ event, payload }) => {
   const entity = payload.subscription.entity;
   try {
     const subscription = await subscriptionRepo.findBySubscriptionId(entity.id);
+    console.log(subscription);
     if (!subscription) throw new ApiError(404, "subscription not found", null);
     switch (event) {
       case "subscription.activated":
