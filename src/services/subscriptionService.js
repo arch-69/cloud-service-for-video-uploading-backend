@@ -46,7 +46,10 @@ const createSubscription = async ({ subscriptionId, planId, userId }) => {
 const handleWebhook = async ({ event, payload }) => {
   const entity = payload.subscription.entity;
   try {
-    const subscription = await subscriptionRepo.findBySubscriptionId(entity.id);
+    console.log("entity id ", entity.id);
+    const subscription = await subscriptionRepo.findBySubscriptionId({
+      subscriptionId: entity.id,
+    });
     console.log(
       "from subscription service handlewebhook method ",
       subscription,
