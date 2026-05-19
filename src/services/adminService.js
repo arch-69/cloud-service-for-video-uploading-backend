@@ -1,3 +1,4 @@
+import Blocked from "../models/block.js";
 import adminRepo from "../repositories/adminRepo.js";
 import ApiError from "../utils/ApiError.js";
 
@@ -17,7 +18,30 @@ const getPlans = async () => {
   return await adminRepo.getPlans();
 };
 
+const updateSerivce = async ({ id, block }) => {
+  return await Blocked.findByIdAndUpdate(
+    id,
+    {
+      $set: {
+        isBlocked: block,
+      },
+    },
+    { returnDocument: "after" },
+  );
+};
+
+const allService = async () => {
+  return Blocked.find();
+};
+
+const blockedServices = async () => {
+  return Blocked.find({ isBlocked: true });
+};
+
 export default {
   createPlan,
   getPlans,
+  updateSerivce,
+  allService,
+  blockedServices,
 };

@@ -4,6 +4,7 @@ import cors from "cors";
 import v2Routes from "./routes/v2fileRoutes.js";
 import Upload from "./models/uploadFile.js";
 import ApiError from "./utils/ApiError.js";
+// import Blocked from "./models/block.js";
 
 const app = express();
 
@@ -17,11 +18,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1", router);
-app.use(
-  "/api/v2/file",
-  (req, res, next) => res.send("this service is temporarily blocked"),
-  v2Routes,
-);
+app.use("/api/v2/file", v2Routes);
 
 // app.get("/", async (req, res)=>{
 //     const bucket = process.env.BUCKET_NAME
@@ -29,6 +26,12 @@ app.use(
 //     console.log(url);
 //     return res.status(200).json({"url":url});
 // })
+
+// app.post("/create", async (req, res) => {
+//   const { service } = req.body;
+//   await Blocked.create({ service });
+//   return res.status(200).send("ok");
+// });
 
 // app.post("/", async (req, res) => {
 //   const uploadId = req.body.uploadId;

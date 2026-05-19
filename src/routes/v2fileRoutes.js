@@ -5,11 +5,13 @@ import v2ctr from "../controllers/v2fileController.js";
 import auth from "../middlewares/auth.js";
 import checkUserSubscribed from "../middlewares/checkPremium.js";
 import videoStreamController from "../controllers/videoStreamController.js";
+import isBlock from "../middlewares/isServiceBlock.js";
 
 const v2Routes = express.Router();
 
 v2Routes.post(
   "/start-multipart-upload",
+  isBlock("UPLOAD"),
   validate(v2fileSchema.startUploadSchema),
   auth.authenticate,
   auth.authorize("user", "admin"),
@@ -18,6 +20,7 @@ v2Routes.post(
 );
 v2Routes.post(
   "/get-presigned-url",
+  isBlock("UPLOAD"),
   validate(v2fileSchema.preSignedSchema),
   auth.authenticate,
   auth.authorize("user", "admin"),
@@ -25,6 +28,7 @@ v2Routes.post(
 );
 v2Routes.post(
   "/complete-multipart-upload",
+  isBlock("UPLOAD"),
   validate(v2fileSchema.completeUploadSchema),
   auth.authenticate,
   auth.authorize("user", "admin"),
@@ -32,6 +36,7 @@ v2Routes.post(
 );
 v2Routes.post(
   "/save-uploaded-part",
+  isBlock("UPLOAD"),
   validate(v2fileSchema.saveUploadedPart),
   auth.authenticate,
   auth.authorize("user", "admin"),
@@ -40,6 +45,7 @@ v2Routes.post(
 
 v2Routes.post(
   "/get-uploaded-parts",
+  isBlock("UPLOAD"),
   auth.authenticate,
   auth.authorize("user", "admin"),
   v2ctr.getUploadedPart,
@@ -47,6 +53,7 @@ v2Routes.post(
 
 v2Routes.post(
   "/abort-multipart-upload",
+  isBlock("UPLOAD"),
   auth.authenticate,
   auth.authorize("user", "admin"),
   v2ctr.abortUploadingPart,
@@ -54,6 +61,7 @@ v2Routes.post(
 
 v2Routes.post(
   "/get-streaming-url",
+  isBlock("STREAMING"),
   auth.authenticate,
   auth.authorize("user", "admin"),
   videoStreamController.getPresingedUrl,
