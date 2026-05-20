@@ -35,4 +35,5 @@ export default {
   getSubscriptionByUserId,
   getSubscribedPlan,
   findBySubscriptionId,
+  updateSubscriptionById,
 };

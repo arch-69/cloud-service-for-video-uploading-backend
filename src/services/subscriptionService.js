@@ -62,7 +62,6 @@ const handleWebhook = async ({ event, payload }) => {
           expiresAt: new Date(entity.current_end * 1000),
           status: entity.status.toUpperCase(),
         };
-
         return subscriptionRepo.updateSubscriptionById({
           _id: subscription._id,
           data,
