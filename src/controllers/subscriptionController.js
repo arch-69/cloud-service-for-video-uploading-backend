@@ -8,6 +8,7 @@ const generateSubscriptionId = asyncHandler(async (req, res) => {
   // console.log(planId);
   const response = await subscriptionService.generateSubscriptionId({
     planId,
+    user,
   });
 
   // console.log(user._id);

@@ -3,9 +3,15 @@ import razorpay from "../configs/razorpayconfig.js";
 import ApiError from "../utils/ApiError.js";
 import subscriptionRepo from "../repositories/subscriptionRepo.js";
 
-const generateSubscriptionId = async ({ planId }) => {
+const generateSubscriptionId = async ({ planId, user }) => {
   if (!planId) throw new ApiError(400, "planId is required", null);
   try {
+    const isSubscribe = await subscriptionRepo.getSubscribedPlan({
+      userId: user._id,
+    });
+
+    if (isSubscribe) throw new ApiError(409, "already subscribed", null);
+
     const plan = await Plan.findById(planId);
     if (!plan) throw new ApiError(404, "plan not found", null);
 
