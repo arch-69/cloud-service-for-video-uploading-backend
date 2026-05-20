@@ -56,10 +56,49 @@ const handleWebhook = async ({ event, payload }) => {
     );
     if (!subscription) throw new ApiError(404, "subscription not found", null);
     switch (event) {
-      case "subscription.activated":
-        {
-        }
-        break;
+      case "subscription.activated": {
+        const data = {
+          startedAt: new Date(entity.current_start * 1000),
+          expiresAt: new Date(entity.current_end * 1000),
+          status: entity.status.toUpperCase(),
+        };
+
+        return subscriptionRepo.updateSubscriptionById({
+          _id: subscription._id,
+          data,
+        });
+      }
+
+      case "subscription.failed": {
+        const data = {
+          status: "PAST_DUE",
+        };
+        return subscriptionRepo.updateSubscriptionById({
+          _id: subscription._id,
+          data,
+        });
+      }
+
+      case "subscription.cancelled": {
+        const data = {
+          status: "CANCELLED",
+        };
+        return subscriptionRepo.updateSubscriptionById({
+          _id: subscription._id,
+          data,
+        });
+      }
+      case "subscription.charged": {
+        const data = {
+          startedAt: new Date(entity.current_start * 1000),
+          expiresAt: new Date(entity.current_end * 1000),
+          status: "ACTIVE",
+        };
+        return subscriptionRepo.updateSubscriptionById({
+          _id: subscription._id,
+          data,
+        });
+      }
     }
   } catch (error) {
     throw new ApiError(500, error.message, error.errors);
