@@ -10,6 +10,8 @@ const generateSubscriptionId = async ({ planId, user }) => {
       userId: user._id,
     });
 
+    console.log("subscribed data ", isSubscribe, " and the user ", user);
+
     if (isSubscribe) throw new ApiError(409, "already subscribed", null);
 
     const plan = await Plan.findById(planId);

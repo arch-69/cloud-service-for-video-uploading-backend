@@ -6,7 +6,7 @@ const getSubscriptionByUserId = ({ userId }) =>
   Subscription.findOne({ userId });
 
 const getSubscribedPlan = ({ userId }) =>
-  Subscription.findOne({ userId, status: "ACTIVE" }).populate("plan");
+  Subscription.findOne({ user: userId, status: "ACTIVE" }).populate("plan");
 
 const findBySubscriptionId = ({ subscriptionId }) =>
   Subscription.findOne({ subscriptionId });
