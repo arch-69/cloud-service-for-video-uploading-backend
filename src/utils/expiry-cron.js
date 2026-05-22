@@ -7,7 +7,7 @@ const initializeExpiryCronWorker = () => {
   );
 
   // Runs exactly once a day at midnight (00:00)
-  cron.schedule("0 0 * * *", async () => {
+  cron.schedule("0 * * * *", async () => {
     console.log(`🔍 Expiry scanning started at: ${new Date().toISOString()}`);
 
     try {
