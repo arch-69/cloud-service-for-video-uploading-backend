@@ -33,7 +33,18 @@ const handleWebhookEvent = asyncHandler(async (req, res) => {
   res.status(200).json({ message: "okay" });
 });
 
+const getCurrentPlan = asyncHandler(async (req, res) => {
+  console.log("getting current plan:", req.user);
+
+  const response = await subscriptionService.getCurrentPlan({ user: req.user });
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, "current plan fetched successfully", response));
+});
+
 export default {
   generateSubscriptionId,
   handleWebhookEvent,
+  getCurrentPlan,
 };

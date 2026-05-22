@@ -112,8 +112,15 @@ const handleWebhook = async ({ event, payload }) => {
   }
 };
 
+const getCurrentPlan = async ({ user }) => {
+  if (!user) throw new ApiError(400, "login first");
+
+  return await subscriptionRepo.getSubscribedPlan({ userId: user });
+};
+
 export default {
   generateSubscriptionId,
   createSubscription,
   handleWebhook,
+  getCurrentPlan,
 };

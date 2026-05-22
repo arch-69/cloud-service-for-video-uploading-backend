@@ -18,4 +18,11 @@ subscriptionRoutes.post(
   subscriptionCtr.handleWebhookEvent,
 );
 
+subscriptionRoutes.get(
+  "/get-current-plan",
+  auth.authenticate,
+  auth.authorize("user", "admin"),
+  subscriptionCtr.getCurrentPlan,
+);
+
 export default subscriptionRoutes;
